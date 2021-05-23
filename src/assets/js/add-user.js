@@ -1,13 +1,11 @@
-var addUserModule = {
+var addPersonnelModule = {
   getObject: function () {
-    var addedUser = {
+    var addedPersonnel = {
       name: $("#addName").val(),
-      phoneNumber: $("#addPhoneNumber").val(),
-      emailAddress: $("#addEmail").val(),
-      password: $("#addPassword").val(),
-      suspended: $("#addSuspend").prop("checked"),
+      phone: $("#addPhone").val(),
+      age: Number($("#addAge").val()),
     };
-    return { data: addedUser };
+    return { data: addedPersonnel };
   },
   render: function () {
     $(".add-button-container").append(
@@ -19,27 +17,25 @@ var addUserModule = {
   handleSubmit: function () {
     let addModule = this;
     $("#save-button").on("click", function () {
-      var addedUser = addModule.getObject();
+      var addedPersonnel = addModule.getObject();
       $.ajax({
-        url: `${config.apiUrl}/api/users`,
+        url: `${config.apiUrl}/gateway/personnel`,
         type: "POST",
         async: false,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(addedUser.data),
+        data: JSON.stringify(addedPersonnel.data),
         success: function (response) {
           $("#addModal").modal("toggle");
-          table.row.add(response.data).draw(false, null);
+          console.log(`table`, table);
+          console.log(`response`, response);
+          table.row.add(response).draw(false, null);
           addModule.clearInputs();
         },
       });
     });
   },
   clearInputs: function () {
-    $("#addName").val(""),
-      $("#addPhoneNumber").val(""),
-      $("#addEmail").val(""),
-      $("#addPassword").val(""),
-      $("#addSuspend").prop("checked", false);
+    $("#addName").val(""), $("#addPhone").val(""), $("#addAge").val("");
   },
   init: function () {
     this.render();

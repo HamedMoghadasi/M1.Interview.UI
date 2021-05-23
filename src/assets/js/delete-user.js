@@ -3,7 +3,7 @@ var delteUserModule = {
     $("#deleteId").val(id);
     $("#deleteRowNumber").val(rowNumber);
     var row = table.data().filter((user) => user.id === id)[0];
-    document.getElementById('currentUserName').innerHTML = row.name;
+    document.getElementById("currentUserName").innerHTML = row.name;
     console.log(row);
   },
   handleSubmit: function () {
@@ -11,7 +11,7 @@ var delteUserModule = {
       var rowNumber = $("#deleteRowNumber").val();
       var id = $("#deleteId").val();
       $.ajax({
-        url: `${config.apiUrl}gateway/personnel/${id}`,
+        url: `${config.apiUrl}/gateway/personnel/${id}`,
         type: "DELETE",
         async: false,
         contentType: "application/json; charset=utf-8",

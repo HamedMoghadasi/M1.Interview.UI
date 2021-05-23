@@ -1,6 +1,6 @@
 var table = $("#table").DataTable(datatableConfig.options());
 
-addUserModule.init();
+addPersonnelModule.init();
 editUserModule.init();
 delteUserModule.init();
 showChartModule.init();

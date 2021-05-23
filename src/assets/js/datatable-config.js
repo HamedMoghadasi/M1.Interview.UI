@@ -1,9 +1,9 @@
 var datatableConfig = {
   columns: [
-    { data: "id", "autoWidth": true },
-    { data: "name", "autoWidth": true },
-    { data: "phone", "autoWidth": true },
-    { data: "age", "autoWidth": true },
+    { data: "id", autoWidth: true },
+    { data: "name", autoWidth: true },
+    { data: "phone", autoWidth: true },
+    { data: "age", autoWidth: true },
     {
       data: null,
       render: function (data, type, full, meta) {
@@ -27,7 +27,7 @@ var datatableConfig = {
   getAllUsers: function () {
     let temp = [];
     $.ajax({
-      url: `${config.apiUrl}gateway/personnel`,
+      url: `${config.apiUrl}/gateway/personnel`,
       type: "GET",
       async: false,
       contentType: "application/json; charset=utf-8",
