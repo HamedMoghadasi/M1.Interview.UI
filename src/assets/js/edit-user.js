@@ -3,43 +3,35 @@ var editUserModule = {
     var editedUser = {
       id: Number($("#editId").val()),
       name: $("#editName").val(),
-      phoneNumber: $("#editPhoneNumber").val(),
-      emailAddress: $("#editEmail").val(),
-      password: $("#editPassword").val(),
-      lastLogin: $("#editLastLogin").val(),
-      createDate: $("#editCreateDate").val(),
-      suspended: $("#editSuspend").prop("checked"),
+      phone: $("#editPhone").val(),
+      age: Number($("#editAge").val()),
     };
-    let rowNumber = $("#editRowNumber").val();
-    return { data: editedUser, rowNumber: rowNumber };
+    return { data: editedUser };
   },
-  fillInputs: function (id, rowNumber) {
+  fillInputs: function (id) {
     var row = table.data().filter((user) => user.id === id)[0];
     $("#editId").val(row.id);
-    $("#editRowNumber").val(rowNumber);
     $("#editName").val(row.name);
-    $("#editPhoneNumber").val(row.phoneNumber);
-    $("#editEmail").val(row.emailAddress);
-    $("#editPassword").val(row.password);
-    $("#editLastLogin").val(row.lastLogin);
-    $("#editCreateDate").val(row.createDate);
-    $("#editSuspend").prop("checked", row.suspended);
+    $("#editPhone").val(row.phone);
+    $("#editAge").val(row.age);
   },
   handleSubmit: function () {
     let editModule = this;
     $("#update-button").on("click", function () {
       var editedUser = editModule.getObject();
+
+      var id = $(`#editId`).val();
+      var btn = $("tr").find(`button.edit-button[data-id='${id}']`)[0];
+      var tr = $(btn).closest("tr");
+
       $.ajax({
-        url: `${config.apiUrl}/api/users`,
+        url: `${config.apiUrl}/gateway/personnel`,
         type: "PUT",
         async: false,
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(editedUser.data),
         success: function (response) {
-          table
-            .row(editedUser.rowNumber)
-            .data(editedUser.data)
-            .draw(false, null);
+          table.row(tr).data(response).draw(false, null);
           $("#editModal").modal("toggle");
         },
       });
